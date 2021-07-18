@@ -1,0 +1,370 @@
+//  Table of Contents:
+//
+//   1. Mixins
+//   2. Global
+//   3. Typography
+//   4. Home
+
+// 1. Mixins
+// ---------
+
+@mixin links ($link, $hover) {
+  a {
+    color: $link;
+    &:hover {
+      color: $hover;   
+    }
+  }
+}
+
+@mixin link-underline($color, $size, $duration, $centered) {
+  color: $color;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  
+  &:before {
+    background-color: $color;
+    content: '';
+    height: $size;
+    position: absolute;
+    bottom: 0 - ($size/2);
+    transition: $duration;
+    width: 0;
+    @if $centered == 'true' {
+      left: 50%;
+      transform: translateX(-50%); 
+    }
+  }
+  
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+  }
+}
+
+// 2. Global
+// ---------
+
+.viewheight {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+body {  
+  cursor: default;
+}
+
+body {
+  opacity: 1;
+  transition: $primary-transition;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+
+svg {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: $primary-color;
+  color: $secondary-color;
+}
+
+:focus {
+  outline: 0;
+}
+
+[data-aos] {
+overflow: hidden;
+}
+
+// 3. Typography
+// -------------
+
+@mixin primiary-font {
+  font-family: $primary-font-family;
+}
+
+@mixin secondary-font {
+  font-family: $secondary-font-family;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@mixin tertiary-font {
+  font-family: $tertiary-font-family;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem;
+}
+
+a {
+  transition: $primary-transition;
+}
+
+p:last-child {
+ margin-bottom: 0;
+}
+
+small {
+  color: $color--medium-gray;
+}
+
+h3, h4, h5, h6 {
+  @include tertiary-font;
+}
+
+h1 {
+  line-height: 1.1;
+}
+
+h4 {
+  color: $color--medium-gray;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+i, cite, em, var, address, dfn {
+  font-style: normal;
+}
+
+.menu .menu-text {
+  font-weight: $global-weight-normal;
+}
+
+// X. Pages
+// ------
+
+.page {
+//   transition: $primary-transition;
+  @include breakpoint(small) {
+    padding: 1rem 1rem;
+  }
+  @include breakpoint(medium) {
+    padding: 2rem 2rem;
+  }
+  @include breakpoint(large) {
+    padding: 2rem 2.5rem;
+  }
+  @include breakpoint(xlarge) {
+    padding: 2rem 3rem;
+  }
+}
+
+// X. Navigation
+// ------
+
+.navigation__small {
+  z-index: 3;
+}
+
+.navigation--mobile {
+  z-index: 1;
+  position: fixed;
+  background: $color--white;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; 
+  opacity: 0;
+  transition: $primary-transition;
+  visibility: hidden;
+  font-family: $header-font-family;
+  font-size: 1.5rem;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  a {
+    color: $color--black;
+    padding: 1rem 0rem;
+  }
+  
+  a:hover {
+    color: $color--medium-gray;
+  }
+  
+  .menu .active>a {
+    color: black;
+  }
+  
+  .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    background-color: $color--white;
+  } 
+}
+
+.navigation__logo {
+  font-family: $secondary-font-family;
+  text-transform: uppercase;
+  font-size: 2rem;
+  letter-spacing: 0.2em;
+}
+
+.navigation__menu {
+  @include tertiary-font
+  @include links ($color--medium-gray, $color--black)
+  letter-spacing: $letter-spacing--looser;
+}
+
+
+$menu-underline-from-center-border-thickness: 1px;
+
+.hover-underline-menu {
+  .menu {
+    .underline-from-center {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: calc(100% - #{$menu-underline-from-center-border-thickness});
+        border-bottom: $menu-underline-from-center-border-thickness solid $color--medium-gray;
+        left: 50%;
+        right: 50%;
+        transition: all 0.5s ease;
+      }
+
+      &:hover::after {
+        left: 0;
+        right: 0;
+        transition: all 0.5s ease;
+      }
+    }
+  }
+}
+
+// X. Home
+// ------
+
+.home img {
+  filter: saturate(90%) brightness(97.5%);
+  transition: $primary-transition;
+}
+    
+.home img:hover {
+  filter: saturate(80%) brightness(90%);
+}
+
+// X. Home
+// ------
+
+.info__map {
+  @include breakpoint(small) {
+  height: 15rem;
+  }
+  @include breakpoint(medium) { 
+  height: 30rem;
+  }
+}
+
+
+// X. Team
+// ------
+
+.team img {
+  filter: saturate(0%) brightness(97.5%);
+  transition: $primary-transition;
+}
+    
+.team img:hover {
+  filter: saturate(80%) brightness(90%);
+}
+
+.team__team-member__name {
+  @include tertiary-font
+}
+
+.team__team-member__job-title {
+  color: $color--medium-gray;
+}
+
+// X. Footer
+// ---------
+
+.service__detail {
+  padding-bottom: 1rem;
+}
+
+.service__detail__price {
+  color: $color--medium-gray;
+}
+
+// X. Footer
+// ---------
+
+footer {
+  @include tertiary-font
+}
+
+.footer__socials {
+  @include links ($color--medium-gray, $color--black)
+}
+
+.footer__links {
+  @include links ($color--medium-gray, $color--black)
+}
+
+.overlap-up-one {
+  margin-top: -10vh;
+}
+
+.overlap-up-two {
+  margin-top: -20vh;
+}
+
+.overlap-up-three {
+  margin-top: -30vh;
+}
+
+.overlap-up-four {
+  margin-top: -40vh;
+}
+
+.overlap-up-five {
+  margin-top: -50vh;
+}
+
+.overlap-down-one {
+  margin-top: 10vh;
+}
+
+.overlap-down-two {
+  margin-top: 20vh;
+}
+
+.overlap-down-three {
+  margin-top: 30vh;
+}
+
+.overlap-down-four {
+  margin-top: 40vh;
+}
+
+.input-group-button {
+  margin-left: 1rem;
+}
+
+.holding p {
+  @include breakpoint(small) {
+    font-size: 17px
+  }
+  @include breakpoint(medium) {
+    font-size: 18px
+  }
+}
+
